@@ -21,15 +21,8 @@ func TestMainOutput(t *testing.T) {
 	}
 }
 
-type MockClient struct{}
-
-func (m *MockClient) GetTasks() ([]Task, error) {
-	return []Task{Task{ID: "1"}, Task{ID: "2"}, Task{ID: "3"}}, nil
-}
 
 func TestExecuteAction(t *testing.T) {
-	mockClient := &MockClient{}
-
 	var buf bytes.Buffer
 	log.SetOutput(&buf)
 

@@ -15,6 +15,7 @@ type TodoistAPIClient struct {
 // TodoistClient is an interface that represents a Todoist client
 type TodoistClient interface {
 	GetTasks() ([]Task, error)
+	CreateTask(project_id string, description string, content string) (Task, error)
 }
 
 // Due is a struct that represents a Todoist due date
@@ -79,4 +80,8 @@ func (client *TodoistAPIClient) GetTasks() ([]Task, error) {
 	}
 
 	return tasks, nil
+}
+
+func (client *TodoistAPIClient) CreateTask(project_id string, description string, content string) (Task, error) {
+	return Task{}, nil
 }

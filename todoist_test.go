@@ -26,12 +26,19 @@ func TestNewTodoistAPIClient(t *testing.T) {
 }
 
 type MockTodoistClient struct {
+	Task  Task
 	Tasks []Task
 	Err   error
+	GetTasksCalled bool
 }
 
 func (m *MockTodoistClient) GetTasks() ([]Task, error) {
+	m.GetTasksCalled = true
 	return m.Tasks, m.Err
+}
+
+func (m *MockTodoistClient) CreateTask(project_id string, description string, content string) (Task, error) {
+	return m.Task, m.Err
 }
 
 func TestGetTasks(t *testing.T) {
@@ -71,6 +78,27 @@ func TestGetTasks(t *testing.T) {
 			task.URL != mockClient.Tasks[i].URL {
 			t.Errorf("Expected task to be %v, but got %v", mockClient.Tasks[i], task)
 		}
+	}
+}
+
+func TestCreateTask(t *testing.T) {
+	mockClient := &MockTodoistClient{
+		Task: newRandomTask(),
+		Err:  nil,
+	}
+
+	task, err := mockClient.CreateTask(
+		"project_id",
+		"description",
+		"content",
+	)
+
+	if err != nil {
+		t.Errorf("Expected error to be nil, but got %v", err)
+	}
+
+	if task.ProjectID != mockClient.Task.ProjectID {
+		t.Errorf("Expected project_id to be %q, but got %q", mockClient.Task.ProjectID, task.ProjectID)
 	}
 }
 
