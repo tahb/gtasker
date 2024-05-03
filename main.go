@@ -1,7 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"log"
+)
 
 func main() {
-	fmt.Println("Hello, world!")
+	action := flag.String("action", "tasks", "a string")
+
+	flag.Parse()
+
+	log.Print("action:", *action)
+
+	switch *action {
+	case "tasks":
+		fmt.Println("Getting tasks!")
+	}
 }
