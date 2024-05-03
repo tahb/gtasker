@@ -12,3 +12,11 @@ Once you have Go installed, you can build the gtasker binary by running:
 ```bash
 go build main.go
 ```
+
+## Usage
+
+Get all tasks:
+
+```bash
+go run . -projectId 123 -token 456 -action tasks
+```
