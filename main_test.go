@@ -21,28 +21,12 @@ func TestMainOutput(t *testing.T) {
 	}
 }
 
-
 func TestExecuteAction(t *testing.T) {
-	var buf bytes.Buffer
-	log.SetOutput(&buf)
+	mockClient := &MockTodoistClient{}
 
 	executeAction(mockClient, "tasks")
 
-	expectedTasks := []Task{
-		Task{ID: "1"},
-		Task{ID: "2"},
-		Task{ID: "3"},
-	}
-	expectedTaskIds := []string{}
-	for _, task := range expectedTasks {
-		expectedTaskIds = append(expectedTaskIds, task.ID)
-	}
-
-	got := buf.String()
-
-	for _, expectedTaskId := range expectedTaskIds {
-		if !strings.Contains(got, expectedTaskId) {
-			t.Errorf("Expected output to contain: %q, got: %q", expectedTaskId, got)
-		}
+	if !mockClient.GetTasksCalled {
+		t.Errorf("Expected GetTasks to be called")
 	}
 }

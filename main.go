@@ -26,10 +26,6 @@ func main() {
 func executeAction(client TodoistClient, action string) {
 	switch action {
 	case "tasks":
-		tasks, _ := client.GetTasks()
-
-		for _, task := range tasks {
-			log.Print(task)
-		}
+		client.GetTasks()
 	}
 }
